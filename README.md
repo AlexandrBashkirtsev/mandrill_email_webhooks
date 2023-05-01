@@ -41,7 +41,7 @@ Each task serializes payload in custom handler class instance, then calls its `h
 
 For `open` event `OpenEventHandler` class is provided. `OpenEventHandler` is linked with Django model `OpenEvent` for permanent storage. `OpenEventHandler` provided additional steps to handle() procedure with more serialization (email message) and connection to Channels/Redis layer for notifications. Each new `open` event goes through Channels/Redis layer and is being sent to websocket client.
 
-This is Django application:
+Django application structure:
 
 - `emailhooks` app handles Mandrill webhooks.
 - `notifications` app handles notifications (`open` event websocket notification is implemented).
