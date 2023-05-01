@@ -1,0 +1,68 @@
+<html>
+    <h2>
+        Open events tracker
+    </h2>
+    <body>
+        <table id="eventstable">
+            <thead>
+                <tr>
+                    <th>ts</th>
+                    <th>event</th>
+                    <th>email</th>
+                    <th>msg</th>
+                    <th>user_agent</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <script>
+
+            function insertRow(event){
+
+                var tr      = document.createElement("tr"),
+                    tdTs    = document.createElement("td"),
+                    tdEvent = document.createElement("td"),
+                    tdEmail = document.createElement("td"),
+                    tdMsg   = document.createElement("td"),
+                    tdUserAgent = document.createElement("td"),
+                    docFrag = new DocumentFragment();
+
+                tdTs.textContent    = event.ts;
+                tdEvent.textContent = event.event;
+                tdEmail.textContent = event.msg.email;
+                tdMsg.textContent   = event.msg;
+                tdUserAgent.textContent = event.user_agent;
+
+                tr.appendChild(tdTs);
+                tr.appendChild(tdEvent);
+                tr.appendChild(tdEmail);
+                tr.appendChild(tdMsg);
+                tr.appendChild(tdUserAgent);
+
+                docFrag.appendChild(tr);
+
+                return docFrag;
+            }
+
+            var openEventSocket = new WebSocket(
+                'ws://'
+                + window.location.host
+                + '/open/'
+                ),
+                table = document.getElementById("eventstable");
+
+            openEventSocket.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                table.appendChild(insertRow(data.context))
+                console.log(data)
+
+            }
+
+            openEventSocket.onclose = function(event) {
+                console.error('Socket is closed');
+            };
+        </script>
+    </body>
+</html>
