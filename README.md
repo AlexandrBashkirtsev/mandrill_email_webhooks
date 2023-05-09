@@ -1,7 +1,7 @@
 # Mandrill emails tracking application
 
 This code provides application structure for Mandrill transactional email events handling.
-Code designedwith Django, Celery and Redis.
+Web-framewokr is Django, events are handled with Celery and Redis. Notifications are handled with Channels and Redis.
 
 ## Application architecture
 
